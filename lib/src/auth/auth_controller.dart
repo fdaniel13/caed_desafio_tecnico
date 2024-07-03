@@ -1,15 +1,9 @@
 import 'package:caed_desafio_tecnico/src/auth/auth_repository.dart';
 
 class AuthController{
- AuthRepository _authRepository;
+ final AuthRepository _authRepository;
   AuthController(this._authRepository);
 
-   Future<bool> canLogin(
-      {required String username, required String pass}) async {
-    bool canNavigate = false;
-
-    return canNavigate;
-  }
 
   bool validateUser({required String? username}) {
     bool isValid = username == null || username.isEmpty
@@ -26,5 +20,12 @@ class AuthController{
         : true;
 
     return isValid;
+  }
+
+
+   Future<bool> signIn( {required String username, required String pass}) async {
+   
+       return await _authRepository.signIn(username: username,pass: pass);
+   
   }
 }

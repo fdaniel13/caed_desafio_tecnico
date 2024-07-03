@@ -112,10 +112,12 @@ class _AuthWidgetState extends State<AuthWidget> {
                     FilledButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          bool canGoHome = await controller.canLogin(
+                           var canGoHome=await controller.signIn(
                               username: userController.text,
                               pass: passController.text);
-                          canGoHome ? Modular.to.navigate('/home') : null;
+                            
+                    canGoHome ? Modular.to.navigate('/home') : null;
+                          
                         }
                       },
                       style: ButtonStyle(

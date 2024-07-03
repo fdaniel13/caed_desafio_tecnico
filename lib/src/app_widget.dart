@@ -6,8 +6,13 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Modular.setInitialRoute('/');
+
     return MaterialApp.router(
-      routerConfig: Modular.routerConfig,
+      debugShowCheckedModeBanner: false,
+      title: 'Desafio Tecnico',
+      routeInformationParser: Modular.routeInformationParser,
+      routerDelegate: Modular.routerDelegate,
     );
   }
 }

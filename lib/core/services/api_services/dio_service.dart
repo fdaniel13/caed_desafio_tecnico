@@ -1,3 +1,4 @@
+import 'package:caed_desafio_tecnico/core/services/api_services/dio_interceptors.dart';
 import 'package:dio/dio.dart';
 
 import '../../consts/api_routes.dart';
@@ -8,5 +9,5 @@ final Dio dio=Dio(
     
       baseUrl:apiBaseUrl
     )
-);
+)..interceptors.add(DioInterceptors());
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/consts/icons_svg.dart';
 
@@ -111,6 +112,8 @@ class _AuthWidgetState extends State<AuthWidget> {
                     
                     FilledButton(
                       onPressed: () async {
+
+                        
                         if (_formKey.currentState!.validate()) {
                            var canGoHome=await controller.signIn(
                               username: userController.text,

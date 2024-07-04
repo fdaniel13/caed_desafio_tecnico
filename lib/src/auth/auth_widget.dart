@@ -63,7 +63,7 @@ class _AuthWidgetState extends State<AuthWidget> {
                               validator: (text) {
                                 return controller.validateUser(username: text)
                                     ? null
-                                    : "Nome de usuário inválido";
+                                    : "Nome de usuário não pode estar vazio";
                               },
                               decoration: const InputDecoration(
                                  
@@ -91,7 +91,7 @@ class _AuthWidgetState extends State<AuthWidget> {
                               validator: (text) {
                                 return controller.validatePass(pass: text)
                                     ? null
-                                    : "Senha inválida";
+                                    : "A senha não pode estar vazia";
                               },
                               decoration: const InputDecoration(
                                   
@@ -119,7 +119,7 @@ class _AuthWidgetState extends State<AuthWidget> {
                               username: userController.text,
                               pass: passController.text);
                             
-                    //canGoHome ? Modular.to.navigate('/home') : null;
+                    canGoHome ? Modular.to.navigate('/home') : null;
                           
                         }
                       },

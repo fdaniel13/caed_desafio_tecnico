@@ -1,5 +1,7 @@
 import 'package:caed_desafio_tecnico/src/auth/auth_repository.dart';
 
+import '../../core/models/login_response.dart';
+
 class AuthController{
  final AuthRepository _authRepository;
   AuthController(this._authRepository);
@@ -25,7 +27,9 @@ class AuthController{
 
    Future<bool> signIn( {required String username, required String pass}) async {
    
-       return await _authRepository.signIn(username: username,pass: pass);
+       LoginResponse? loginResponse= await _authRepository.signIn(username: username,pass: pass);
+
+       return loginResponse==null? false:true;
    
   }
 }

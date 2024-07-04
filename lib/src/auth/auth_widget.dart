@@ -116,7 +116,7 @@ class _AuthWidgetState extends State<AuthWidget> {
                               username: userController.text,
                               pass: passController.text);
                             
-                    canGoHome ? Modular.to.navigate('/home') : null;
+                    //canGoHome ? Modular.to.navigate('/home') : null;
                           
                         }
                       },

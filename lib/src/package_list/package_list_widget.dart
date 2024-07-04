@@ -54,7 +54,7 @@ class _PackageListWidgetState extends State<PackageListWidget> {
       body: Container(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.3,
               child: ListView(
@@ -75,7 +75,44 @@ class _PackageListWidgetState extends State<PackageListWidget> {
                   ),
                 ],
               ),
-            )
+            ),
+            Expanded(
+              child: DefaultTabController(
+                length: 3,
+                child: Column(
+                  children: [
+                    const TabBar(
+                      indicatorColor: Colors.black,
+                      labelColor: Colors.black,
+                      tabs: [
+                        Tab(
+                          text: "Pacotes",
+                        ),
+                        Tab(
+                          text: "Status",
+                        ),
+                        Tab(
+                          text: "Dados",
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      child: TabBarView(children: [
+                        Container(
+                          child: Text("Home Body"),
+                        ),
+                        Container(
+                          child: Text("Articles Body"),
+                        ),
+                        Container(
+                          child: Text("User Body"),
+                        )
+                      ]),
+                    )
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

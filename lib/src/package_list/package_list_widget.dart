@@ -1,12 +1,11 @@
-import 'dart:convert';
-
 import 'package:caed_desafio_tecnico/core/enums/package_type_enum.dart';
-import 'package:caed_desafio_tecnico/core/models/package_model.dart';
-import 'package:caed_desafio_tecnico/core/package_mock.dart';
+import 'package:caed_desafio_tecnico/src/package_list/package_list_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 
+import '../../core/helpers/data_helper.dart';
 import 'components/card_package.dart';
 
 class PackageListWidget extends StatefulWidget {
@@ -16,16 +15,15 @@ class PackageListWidget extends StatefulWidget {
   State<PackageListWidget> createState() => _PackageListWidgetState();
 }
 
-class _PackageListWidgetState extends State<PackageListWidget>
-    with TickerProviderStateMixin {
-  int _selectedIndex = 0;
+class _PackageListWidgetState extends State<PackageListWidget> {
+  final int _selectedIndex = 0;
   List<String> menu = ["Início", "Opções", "Tutoriais"];
   List<IconData> menuIcons = [Icons.home, Icons.settings, Icons.info];
-  late TabController _tabController;
-
+  final controller = Modular.get<PackageListController>();
+  late Future _data;
   @override
   void initState() {
-    _tabController = TabController(length: 3, initialIndex: 0, vsync: this);
+    _data = controller.getPackages();
     super.initState();
   }
 
@@ -33,7 +31,7 @@ class _PackageListWidgetState extends State<PackageListWidget>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
+        leading: const InkWell(
           child: Icon(Icons.arrow_back),
         ),
         title: Text(
@@ -48,7 +46,6 @@ class _PackageListWidgetState extends State<PackageListWidget>
       bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Colors.black,
           elevation: 0,
-          selectedIconTheme: IconThemeData(),
           currentIndex: _selectedIndex,
           items: [
             ...menu.map((menuItem) => BottomNavigationBarItem(
@@ -56,78 +53,87 @@ class _PackageListWidgetState extends State<PackageListWidget>
                     width: MediaQuery.of(context).size.width * 0.18,
                     decoration: BoxDecoration(
                       color: _selectedIndex == menu.indexOf(menuItem)
-                          ? Color.fromARGB(255, 176, 209, 235)
+                          ? const Color.fromARGB(255, 176, 209, 235)
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: Icon(menuIcons.elementAt(menu.indexOf(menuItem)))),
                 label: menuItem))
           ]),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 16,
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.3,
-            child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              scrollDirection: Axis.horizontal,
+      body: FutureBuilder(
+          future: _data,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator.adaptive(),
+              );
+            }
+            return Column(
               children: [
-                CardPackage(
-                  packageTypeEnum: PackageTypeEnum.receber,
-                  packageResponse:
-                      PackageResponse.fromJson(jsonDecode(packageMock)),
+                const SizedBox(
+                  height: 16,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  child: ListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      CardPackage(
+                          packageTypeEnum: PackageTypeEnum.receber,
+                          packageResponse: controller.packageResponse!),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      CardPackage(
+                        packageTypeEnum: PackageTypeEnum.devolver,
+                        packageResponse: controller.packageResponse!,
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(
-                  width: 16,
+                  height: 16,
                 ),
-                CardPackage(
-                  packageTypeEnum: PackageTypeEnum.devolver,
-                  packageResponse:
-                      PackageResponse.fromJson(jsonDecode(packageMock)),
+                Expanded(
+                  child: DefaultTabController(
+                    length: 3,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        children: [
+                          const TabBar(
+                            indicatorColor: Colors.black,
+                            labelColor: Colors.black,
+                            tabs: [
+                              Tab(
+                                text: "Pacotes",
+                              ),
+                              Tab(
+                                text: "Status",
+                              ),
+                              Tab(
+                                text: "Dados",
+                              ),
+                            ],
+                          ),
+                          Expanded(
+                            child: TabBarView(children: [
+                              _firstTab(),
+                              _secondTab(),
+                              _thirdTab()
+                            ]),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ],
-            ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Expanded(
-            child: DefaultTabController(
-              length: 3,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  children: [
-                    const TabBar(
-                      indicatorColor: Colors.black,
-                      labelColor: Colors.black,
-                      tabs: [
-                        Tab(
-                          text: "Pacotes",
-                        ),
-                        Tab(
-                          text: "Status",
-                        ),
-                        Tab(
-                          text: "Dados",
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      child: TabBarView(
-                          children: [_firstTab(), _secondTab(), _thirdTab()]),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+            );
+          }),
     );
   }
 
@@ -141,8 +147,103 @@ class _PackageListWidgetState extends State<PackageListWidget>
 
   Widget _secondTab() {
     return SingleChildScrollView(
-      child: Container(
-        child: Text("Articles Body"),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 22.3),
+            child: Text(
+              "Status da caixa",
+              style: GoogleFonts.openSans(
+                fontSize: 16,
+                color: const Color(0xff191C1D),
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: const Color(0xffF0F0F0),
+              borderRadius: BorderRadius.circular(24),
+            ),
+            child: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: controller.packageResponse!
+                    .dadosUltimoPacoteRecebido!.status!.length,
+                itemBuilder: (_, j) {
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.12,
+                    child: TimelineTile(
+                      lineXY: 0.4,
+                      alignment: TimelineAlign.manual,
+                      indicatorStyle: IndicatorStyle(
+                          color: controller
+                              .packageResponse!
+                              .dadosUltimoPacoteRecebido!
+                              .status![j]
+                              .status!
+                              .colorEnum,
+                          width: MediaQuery.of(context).size.width * 0.05),
+                      endChild: Padding(
+                        padding: const EdgeInsets.only(left: 12),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              controller
+                                  .packageResponse!
+                                  .dadosUltimoPacoteRecebido!
+                                  .status![j]
+                                  .status!
+                                  .stringValue,
+                              textAlign: TextAlign.left,
+                              style: GoogleFonts.openSans(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      startChild: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            DataHelper.dateToDMA(
+                                date: controller
+                                    .packageResponse!
+                                    .dadosUltimoPacoteRecebido!
+                                    .status![j]
+                                    .diaHora!),
+                            style: GoogleFonts.openSans(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Text(
+                            DataHelper.dateToHourMin(
+                                date: controller
+                                    .packageResponse!
+                                    .dadosUltimoPacoteRecebido!
+                                    .status![j]
+                                    .diaHora!),
+                            style: GoogleFonts.openSans(
+                              fontSize: 14,
+                              color: const Color(0xff828282),
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+          ),
+        ],
       ),
     );
   }
@@ -180,10 +281,16 @@ class _PackageListWidgetState extends State<PackageListWidget>
               shrinkWrap: true,
               itemBuilder: (_, i) {
                 return ListTile(
-                  title: Text(PackageResponse.fromJson(jsonDecode(packageMock))
-                      .listaPacotesRecebidos![i]
-                      .codigo!),
-                  trailing: Icon(Icons.navigate_next),
+                  title: Text(
+                    controller
+                        .packageResponse!.listaPacotesRecebidos![i].codigo!,
+                    style: GoogleFonts.openSans(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  trailing: const Icon(Icons.navigate_next),
                   subtitle: Row(
                     children: [
                       Container(
@@ -211,9 +318,8 @@ class _PackageListWidgetState extends State<PackageListWidget>
               separatorBuilder: (_, i) {
                 return const Divider();
               },
-              itemCount: PackageResponse.fromJson(jsonDecode(packageMock))
-                  .listaPacotesRecebidos!
-                  .length)
+              itemCount:
+                  controller.packageResponse!.listaPacotesRecebidos!.length)
         ],
       ),
     );

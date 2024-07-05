@@ -1,3 +1,5 @@
+import '../enums/status_enum.dart';
+
 class PackageResponse {
   List<ListaPacotesRecebidos>? listaPacotesRecebidos;
   ListaPacotesRecebidos? dadosUltimoPacoteRecebido;
@@ -32,10 +34,14 @@ class PackageResponse {
     pacotesParaReceber = json['pacotesParaReceber'];
     pacotesDevolvidos = json['pacotesDevolvidos'];
     pacotesParaDevolver = json['pacotesParaDevolver'];
-    pacotesRecebidosPercentagem = double.parse( json['pacotesRecebidosPercentagem'].toString());
-    pacotesParaReceberPercentagem = double.parse(json['pacotesParaReceberPercentagem'].toString());
-    pacotesDevolvidosPercentagem = double.parse(json['pacotesDevolvidosPercentagem'].toString());
-    pacotesParaDevolverPercentagem = double.parse(json['pacotesParaDevolverPercentagem'].toString());
+    pacotesRecebidosPercentagem =
+        double.parse(json['pacotesRecebidosPercentagem'].toString());
+    pacotesParaReceberPercentagem =
+        double.parse(json['pacotesParaReceberPercentagem'].toString());
+    pacotesDevolvidosPercentagem =
+        double.parse(json['pacotesDevolvidosPercentagem'].toString());
+    pacotesParaDevolverPercentagem =
+        double.parse(json['pacotesParaDevolverPercentagem'].toString());
   }
 
   Map<String, dynamic> toJson() {
@@ -112,19 +118,20 @@ class ListaPacotesRecebidos {
 
 class Status {
   String? diaHora;
-  String? status;
+  StatusEnum? status;
 
   Status({this.diaHora, this.status});
 
   Status.fromJson(Map<String, dynamic> json) {
     diaHora = json['diaHora'];
-    status = json['status'];
+    status = StatusEnum.values.firstWhere(
+        (v) => v.stringEnum.contains(json['status'].toString().toLowerCase()));
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['diaHora'] = this.diaHora;
-    data['status'] = this.status;
+    data['status'] = this.status?.stringEnum.toUpperCase();
     return data;
   }
 }

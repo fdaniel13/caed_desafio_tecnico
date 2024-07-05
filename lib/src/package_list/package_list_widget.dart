@@ -139,9 +139,95 @@ class _PackageListWidgetState extends State<PackageListWidget> {
 
   Widget _thirdTab() {
     return SingleChildScrollView(
-      child: Container(
-        child: Text("User Body"),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 22.3),
+            child: Text(
+              "Dados da caixa",
+              style: GoogleFonts.openSans(
+                fontSize: 16,
+                color: const Color(0xff191C1D),
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          _containerDados(
+              title: "CÓDIGO",
+              value: controller
+                  .packageResponse!.dadosUltimoPacoteRecebido!.codigo!),
+          _containerDados(
+              title: "PONTO DE ENTREGA",
+              value: controller
+                  .packageResponse!.dadosUltimoPacoteRecebido!.pontoDeEntrega!),
+          _containerDados(
+              title: "MUNICÍPIO",
+              value: controller
+                  .packageResponse!.dadosUltimoPacoteRecebido!.municipio!),
+          _containerDados(
+              title: "ESCOLA",
+              value: controller
+                  .packageResponse!.dadosUltimoPacoteRecebido!.escola!),
+          _containerDados(
+              title: "ANO ESCOLAR/ETAPA",
+              value: controller.packageResponse!.dadosUltimoPacoteRecebido!
+                  .anoEscolarEtapa!),
+          _containerDados(
+              title: "COMPONENTE CURRICULAR",
+              value: controller.packageResponse!.dadosUltimoPacoteRecebido!
+                  .componenteCurricular!),
+        ],
       ),
+    );
+  }
+
+  Widget _containerDados({required String title, required String value}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical:  16.0),
+          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    title,
+                    style: GoogleFonts.openSans(
+                      fontSize: 16,
+                      color: const Color(0xff828282),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              width: 24,
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    value,
+                    style: GoogleFonts.openSans(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ]),
+        ),
+        Divider(),
+      ],
     );
   }
 
@@ -170,8 +256,8 @@ class _PackageListWidgetState extends State<PackageListWidget> {
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: controller.packageResponse!
-                    .dadosUltimoPacoteRecebido!.status!.length,
+                itemCount: controller
+                    .packageResponse!.dadosUltimoPacoteRecebido!.status!.length,
                 itemBuilder: (_, j) {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height * 0.12,

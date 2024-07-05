@@ -32,8 +32,12 @@ class _PackageListWidgetState extends State<PackageListWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading:  InkWell(
-          onTap: ()=>Modular.to.navigate('/'),
+        leading: InkWell(
+          onTap: () {
+            controller.clearAcessKey();
+
+            Modular.to.navigate('/auth');
+          },
           child: const Icon(Icons.arrow_back),
         ),
         title: Text(
@@ -331,13 +335,14 @@ class _PackageListWidgetState extends State<PackageListWidget> {
                   ),
                   trailing: InkWell(
                       child: const Icon(Icons.navigate_next),
-                      onTap: () => Modular.to.pushNamed("detail",arguments: controller
-                        .packageResponse!.listaPacotesRecebidos![i])),
+                      onTap: () => Modular.to.pushNamed("detail",
+                          arguments: controller
+                              .packageResponse!.listaPacotesRecebidos![i])),
                   subtitle: Row(
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.blue,
+                          color: const Color(0xffAEF3FE),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         width: MediaQuery.of(context).size.width * 0.15,
@@ -348,7 +353,7 @@ class _PackageListWidgetState extends State<PackageListWidget> {
                       ),
                       Container(
                           decoration: BoxDecoration(
-                            color: const Color(0xffCCCCCC),
+                            color:  Colors.blue,
                             borderRadius: BorderRadius.circular(8),
                           ),
                           height: 7,

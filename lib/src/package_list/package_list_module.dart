@@ -1,3 +1,4 @@
+import 'package:caed_desafio_tecnico/src/package_list/pages/package_detail.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../core/services/api_services/dio_service.dart';
@@ -20,6 +21,7 @@ class PackageListModule extends Module{
   @override
   void routes(RouteManager r) {
     r.child('/', child: (_)=>const PackageListWidget() );
+    r.child('/detail', child: (_)=>const PackageDetail() );
     super.routes(r);
   }
 }

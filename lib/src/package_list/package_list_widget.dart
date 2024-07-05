@@ -7,6 +7,7 @@ import 'package:timeline_tile/timeline_tile.dart';
 
 import '../../core/helpers/data_helper.dart';
 import 'components/card_package.dart';
+import 'components/container_dados.dart';
 
 class PackageListWidget extends StatefulWidget {
   const PackageListWidget({super.key});
@@ -153,81 +154,32 @@ class _PackageListWidgetState extends State<PackageListWidget> {
               ),
             ),
           ),
-          _containerDados(
+          ContainerDados(
               title: "CÓDIGO",
               value: controller
                   .packageResponse!.dadosUltimoPacoteRecebido!.codigo!),
-          _containerDados(
+          ContainerDados(
               title: "PONTO DE ENTREGA",
               value: controller
                   .packageResponse!.dadosUltimoPacoteRecebido!.pontoDeEntrega!),
-          _containerDados(
+          ContainerDados(
               title: "MUNICÍPIO",
               value: controller
                   .packageResponse!.dadosUltimoPacoteRecebido!.municipio!),
-          _containerDados(
+          ContainerDados(
               title: "ESCOLA",
               value: controller
                   .packageResponse!.dadosUltimoPacoteRecebido!.escola!),
-          _containerDados(
+          ContainerDados(
               title: "ANO ESCOLAR/ETAPA",
               value: controller.packageResponse!.dadosUltimoPacoteRecebido!
                   .anoEscolarEtapa!),
-          _containerDados(
+          ContainerDados(
               title: "COMPONENTE CURRICULAR",
               value: controller.packageResponse!.dadosUltimoPacoteRecebido!
                   .componenteCurricular!),
         ],
       ),
-    );
-  }
-
-  Widget _containerDados({required String title, required String value}) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical:  16.0),
-          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    style: GoogleFonts.openSans(
-                      fontSize: 16,
-                      color: const Color(0xff828282),
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              width: 24,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    value,
-                    style: GoogleFonts.openSans(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ]),
-        ),
-        Divider(),
-      ],
     );
   }
 
@@ -376,7 +328,10 @@ class _PackageListWidgetState extends State<PackageListWidget> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  trailing: const Icon(Icons.navigate_next),
+                  trailing: InkWell(
+                      child: const Icon(Icons.navigate_next),
+                      onTap: () => Modular.to.pushNamed("/detail",arguments: controller
+                        .packageResponse!.listaPacotesRecebidos![i])),
                   subtitle: Row(
                     children: [
                       Container(

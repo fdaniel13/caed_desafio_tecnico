@@ -7,8 +7,8 @@ class AppModule extends Module{
 
   @override
   void routes(RouteManager r) {
-    r.module("/Modular.initialRoute", module: AuthModule());
-    r.module(Modular.initialRoute, module: PackageListModule());
+    r.module(Modular.initialRoute, module: AuthModule());
+    r.module("/home", module: PackageListModule());
     super.routes(r);
   }
 }

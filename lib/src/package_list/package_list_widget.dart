@@ -32,8 +32,9 @@ class _PackageListWidgetState extends State<PackageListWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const InkWell(
-          child: Icon(Icons.arrow_back),
+        leading:  InkWell(
+          onTap: ()=>Modular.to.navigate('/'),
+          child: const Icon(Icons.arrow_back),
         ),
         title: Text(
           "Listagem de Pacotes",
@@ -330,7 +331,7 @@ class _PackageListWidgetState extends State<PackageListWidget> {
                   ),
                   trailing: InkWell(
                       child: const Icon(Icons.navigate_next),
-                      onTap: () => Modular.to.pushNamed("/detail",arguments: controller
+                      onTap: () => Modular.to.pushNamed("detail",arguments: controller
                         .packageResponse!.listaPacotesRecebidos![i])),
                   subtitle: Row(
                     children: [

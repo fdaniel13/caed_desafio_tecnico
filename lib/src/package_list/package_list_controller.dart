@@ -6,7 +6,7 @@ class PackageListController {
   PackageResponse? packageResponse;
   PackageListController(this._packageListRepository);
 
-  Future<PackageResponse?> getPackages() async {
+  Future<void> getPackages() async {
     packageResponse = await _packageListRepository.getPackages();
   }
 

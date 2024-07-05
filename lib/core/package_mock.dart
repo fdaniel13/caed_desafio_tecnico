@@ -26,6 +26,136 @@ const String packageMock='''
           "status": "DEVOLVEU"
         }
       ]
+    },
+     {
+      "codigo": "12345",
+      "pontoDeEntrega": "Escola Municipal ABC",
+      "municipio": "São Paulo",
+      "escola": "Escola Municipal ABC",
+      "anoEscolarEtapa": "3º ano do Ensino Fundamental",
+      "componenteCurricular": "Matemática",
+      "status": [
+        {
+          "diaHora": "2024-07-01T10:30:00",
+          "status": "RECEBEU"
+        },
+        {
+          "diaHora": "2024-07-01T11:00:00",
+          "status": "ABRIU"
+        },
+        {
+          "diaHora": "2024-07-01T11:30:00",
+          "status": "LEU"
+        },
+        {
+          "diaHora": "2024-07-01T12:00:00",
+          "status": "DEVOLVEU"
+        }
+      ]
+    },
+     {
+      "codigo": "12345",
+      "pontoDeEntrega": "Escola Municipal ABC",
+      "municipio": "São Paulo",
+      "escola": "Escola Municipal ABC",
+      "anoEscolarEtapa": "3º ano do Ensino Fundamental",
+      "componenteCurricular": "Matemática",
+      "status": [
+        {
+          "diaHora": "2024-07-01T10:30:00",
+          "status": "RECEBEU"
+        },
+        {
+          "diaHora": "2024-07-01T11:00:00",
+          "status": "ABRIU"
+        },
+        {
+          "diaHora": "2024-07-01T11:30:00",
+          "status": "LEU"
+        },
+        {
+          "diaHora": "2024-07-01T12:00:00",
+          "status": "DEVOLVEU"
+        }
+      ]
+    },
+     {
+      "codigo": "12345",
+      "pontoDeEntrega": "Escola Municipal ABC",
+      "municipio": "São Paulo",
+      "escola": "Escola Municipal ABC",
+      "anoEscolarEtapa": "3º ano do Ensino Fundamental",
+      "componenteCurricular": "Matemática",
+      "status": [
+        {
+          "diaHora": "2024-07-01T10:30:00",
+          "status": "RECEBEU"
+        },
+        {
+          "diaHora": "2024-07-01T11:00:00",
+          "status": "ABRIU"
+        },
+        {
+          "diaHora": "2024-07-01T11:30:00",
+          "status": "LEU"
+        },
+        {
+          "diaHora": "2024-07-01T12:00:00",
+          "status": "DEVOLVEU"
+        }
+      ]
+    },
+     {
+      "codigo": "12345",
+      "pontoDeEntrega": "Escola Municipal ABC",
+      "municipio": "São Paulo",
+      "escola": "Escola Municipal ABC",
+      "anoEscolarEtapa": "3º ano do Ensino Fundamental",
+      "componenteCurricular": "Matemática",
+      "status": [
+        {
+          "diaHora": "2024-07-01T10:30:00",
+          "status": "RECEBEU"
+        },
+        {
+          "diaHora": "2024-07-01T11:00:00",
+          "status": "ABRIU"
+        },
+        {
+          "diaHora": "2024-07-01T11:30:00",
+          "status": "LEU"
+        },
+        {
+          "diaHora": "2024-07-01T12:00:00",
+          "status": "DEVOLVEU"
+        }
+      ]
+    },
+     {
+      "codigo": "12345",
+      "pontoDeEntrega": "Escola Municipal ABC",
+      "municipio": "São Paulo",
+      "escola": "Escola Municipal ABC",
+      "anoEscolarEtapa": "3º ano do Ensino Fundamental",
+      "componenteCurricular": "Matemática",
+      "status": [
+        {
+          "diaHora": "2024-07-01T10:30:00",
+          "status": "RECEBEU"
+        },
+        {
+          "diaHora": "2024-07-01T11:00:00",
+          "status": "ABRIU"
+        },
+        {
+          "diaHora": "2024-07-01T11:30:00",
+          "status": "LEU"
+        },
+        {
+          "diaHora": "2024-07-01T12:00:00",
+          "status": "DEVOLVEU"
+        }
+      ]
     }
   ],
   "dadosUltimoPacoteRecebido": {
